@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deyimlerin Hikayesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f3;
+      --parchment: #f0ebe0;
+      --sand: #e2d9c8;
+      --brown-light: #c4a882;
+      --brown-mid: #8b6914;
+      --brown-dark: #4a3520;
+      --ink: #2c1f0e;
+      --accent: #b85c38;
+      --accent-light: #e8845f;
+      --teal: #2a6b6b;
+      --shadow-sm: 0 2px 8px rgba(44,31,14,0.08);
+      --shadow-md: 0 4px 20px rgba(44,31,14,0.12);
+      --shadow-lg: 0 8px 40px rgba(44,31,14,0.15);
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.7;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(196,168,130,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(184,92,56,0.08) 0%, transparent 50%);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--brown-dark);
+      color: var(--cream);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(44,31,14,0.3);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      height: 72px;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      white-space: nowrap;
+      color: var(--brown-light);
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: color .2s;
+      text-decoration: none;
+    }
+    .logo:hover { color: var(--cream); }
+    .logo span { color: var(--accent-light); }
+
+    .search-wrap {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      background: rgba(250,248,243,0.12);
+      border: 1px solid rgba(196,168,130,0.3);
+      color: var(--cream);
+      padding: 10px 16px 10px 44px;
+      border-radius: 50px;
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .search-wrap input::placeholder { color: rgba(250,248,243,0.45); }
+    .search-wrap input:focus {
+      border-color: var(--brown-light);
+      background: rgba(250,248,243,0.18);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    /* ── MAIN ── */
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 56px 0 48px;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(184,92,56,0.1);
+      border: 1px solid rgba(184,92,56,0.25);
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--brown-dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      color: #6b5740;
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 12px;
+      font-style: italic;
+    }
+    .count-badge {
+      display: inline-block;
+      background: var(--sand);
+      color: var(--brown-mid);
+      font-size: 0.82rem;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-top: 8px;
+      font-style: normal;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(196,168,130,0.2);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .card-top {
+      padding: 24px 24px 16px;
+      flex: 1;
+    }
+    .card-num {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 10px;
+    }
+    .card-en {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--brown-dark);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .card-tr {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .card-preview {
+      font-size: 0.85rem;
+      color: #7a6550;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--parchment);
+      color: var(--brown-mid);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .btn-incele {
+      background: var(--brown-dark);
+      color: var(--cream);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-incele:hover { background: var(--accent); }
+
+    /* ── DETAIL PAGE ── */
+    #detail { display: none; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: 1px solid var(--sand);
+      color: var(--brown-mid);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      cursor: pointer;
+      margin-bottom: 36px;
+      transition: background .2s, color .2s;
+    }
+    .back-btn:hover {
+      background: var(--brown-dark);
+      color: var(--cream);
+      border-color: var(--brown-dark);
+    }
+
+    .detail-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(196,168,130,0.2);
+      overflow: hidden;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .detail-header {
+      background: var(--brown-dark);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-header::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 240px;
+      color: rgba(196,168,130,0.1);
+      position: absolute;
+      top: -40px;
+      left: 24px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .detail-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 16px;
+    }
+    .detail-en {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .detail-tr {
+      font-size: 1.05rem;
+      color: var(--accent-light);
+      font-style: italic;
+    }
+
+    .detail-body { padding: 40px 48px 48px; }
+
+    .story-section {
+      margin-bottom: 32px;
+    }
+    .story-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 14px;
+      font-style: normal;
+    }
+    .story-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sand);
+    }
+    .story-flag {
+      display: inline-block;
+      font-size: 1.1rem;
+      margin-right: 2px;
+    }
+    .story-text {
+      font-size: 1.05rem;
+      color: #3d2e1e;
+      line-height: 1.95;
+      border-left: 3px solid var(--brown-light);
+      padding-left: 20px;
+    }
+    .story-text.accent-border { border-color: var(--accent); }
+
+    .divider {
+      border: none;
+      border-top: 2px dashed var(--sand);
+      margin: 32px 0;
+    }
+
+    /* no results */
+    .no-results {
+      text-align: center;
+      padding: 80px 20px;
+      color: #9e8472;
+    }
+    .no-results svg { margin-bottom: 20px; opacity: .4; }
+    .no-results p { font-size: 1.05rem; }
+
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp .4s both; }
+    .detail-card { animation: fadeUp .35s both; }
+    #detail .back-btn { animation: fadeUp .25s both; }
+
+    /* mobile */
+    @media (max-width: 600px) {
+      .header-inner { height: 62px; }
+      .logo { font-size: 1.1rem; }
+      .hero { padding: 36px 0 32px; }
+      .detail-header { padding: 32px 24px 28px; }
+      .detail-body { padding: 28px 24px 36px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" onclick="goHome()" style="cursor:pointer">Deyim<span>&amp;</span>Hikaye</a>
+    <div class="search-wrap" id="searchWrap">
+      <svg class="search-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+        <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Deyim veya hikaye ara…" autocomplete="off" />
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- LIST PAGE -->
+  <div id="listPage">
+    <div class="hero">
+      <div class="hero-eyebrow">İngilizce Projesi</div>
+      <h1>Deyimlerin Gizli Tarihi</h1>
+      <p>Her deyimin arkasında asırlık bir hikaye yatar. Kültürler arası anlam yolculuğuna çıkın.</p>
+      <span class="count-badge" id="countBadge">21 deyim</span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="no-results" id="noResults" style="display:none">
+      <svg width="56" height="56" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="8" stroke="#c4a882" stroke-width="1.5"/>
+        <path d="M16.5 16.5 21 21" stroke="#c4a882" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 11h6M11 8v6" stroke="#c4a882" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <p>Arama sonucu bulunamadı.</p>
+    </div>
+  </div>
+
+  <!-- DETAIL PAGE -->
+  <div id="detail">
+    <button class="back-btn" id="backBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Ana Listeye Dön
+    </button>
+    <div class="detail-card" id="detail-content"></div>
+  </div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// VERİ — Tam ve ayrıntılı hikayeler
+// ─────────────────────────────────────────────────────────────
+const IDIOMS = [
+  {
+    id: "haste-makes-waste",
+    en: "Haste makes waste",
+    tr: "Acele işe şeytan karışır",
+    tag: "Ortak Köken",
+    story: `Bu deyim, ortak bir insanlık deneyiminden doğmuştur: acelecilik hataları beraberinde getirir ve çoğu zaman işi yeniden yapmak zorunda kalınır. Türkçe versiyonun kökeni ilgi çekici bir hikayeye dayanır: Şam'a giden bir kervana katılmak zorunda kalan bir köle, efendisinden emanet aldığı değerli bir testiyi güvenle ulaştırması gerekiyordu. Yolda gecikmeden korkan köle, var gücüyle koşmaya başladı. Ancak dar bir yolda ayağı kaydı ve testi parçalara ayrıldı. Pişmanlık içinde "Ne yapalım, acele ettim, işime şeytan karıştı" dedi. Bu söz halk arasında yayıldı ve zamanla atasözüne dönüştü.
+
+    İngilizce versiyonu ise Benjamin Franklin'in 1736 yılında "Poor Richard's Almanack" adlı yıllık yayınında kalıcı biçimde yerini almıştır. Franklin, pratik yaşam bilgeliğini kısa ve akılda kalıcı atasözleriyle aktarmayı seviyordu. "Haste makes waste" — Acelecilik israf yaratır — ifadesiyle hem maddi hem de zamansal kayıpları kast ediyordu.
+
+    Her iki kültür de bağımsız olarak aynı gerçeği keşfetmiştir: İnsan zihni acelede doğru karar veremez, elle iş yapılırken acele hatayı davet eder, ve sonunda işi ikinci kez yapmak ilk seferinde dikkatli olmaktan çok daha fazla zaman alır.`
+  },
+  {
+    id: "back-burner",
+    en: "To put on the back burner",
+    tr: "Pabucu dama atılmak",
+    tag: "Farklı Kökenler",
+    storyTR: `Osmanlı döneminde esnaf ahlakı ve dürüstlük son derece önemliydi. Ahilik teşkilatı, zanaatkârlar arasındaki ahlaki standartları denetleyen güçlü bir lonca sistemiydi. Bu sistem içinde bir ayakkabıcının müşterisine hile yapması, kalitesiz malzeme kullanması ya da ölçüleri kasıtlı olarak yanlış kesmesi son derece ağır bir suç sayılırdı.
+
+    Hile yapan bir ayakkabıcı tespit edildiğinde, Ahilik heyeti bir soruşturma başlatır ve suç ispatlanırsa o ayakkabıcının pabucu —mesleğinin ve şerefinin simgesi— alınarak ibret-i alem olsun diye dükkanın damına atılırdı. Mahalle halkı damdaki pabucu gördüğünde, o esnafın artık güvenilmez olduğunu anlardı ve alışverişi keserdi. Böylece hem toplumsal kınama hem de ekonomik yaptırım uygulanmış olurdu.
+
+    "Pabucu dama atılmak" deyimi zamanla genişleyerek, sadece ayakkabıcılık mesleğiyle sınırlı kalmayıp, genel olarak birinin işine, makamına ya da itibarına son verilmesi anlamını kazandı. Bugün hâlâ "artık onun pabucu dama atıldı" dediğimizde, o kişinin etkisini, gücünü veya prestijini yitirdiğini kastediyoruz.`,
+    storyEN: `"To put on the back burner" deyimi, mutfak kültüründen doğmuş son derece somut bir mecazdır. Büyük ocaklarda, özellikle 19. ve 20. yüzyılın başlarında kullanılan odun ya da kömür sobalarında, ön gözler yüksek ısı için, arka gözler ise düşük ısıda sıcak tutmak ya da yavaş yavaş pişirmek için kullanılırdı.
+
+    Bir yemek ya da sıvı, arka gözde bekletildiğinde kaynamıyor ama soğumuyordu da; sadece ılık ve ulaşılabilir bir konumda tutuluyordu. Bu fiziksel gerçeklikten doğan mecaz, 1930'lu yıllarda İngiliz ve Amerikan günlük diline girdi. "Bunu back burner'a koyalım" demek, o konunun tamamen rafa kaldırılmadığı ama şu an için öncelik sırasının sonuna atıldığı anlamına geliyordu.
+
+    İkinci Dünya Savaşı döneminde özellikle siyasi ve askeri bağlamlarda yaygın kullanım alanı bulan bu deyim, sonraki on yıllarda iş hayatına, politikaya ve günlük dile yerleşti. Bugün "to be put on the back burner" dediğimizde, bir projenin, bir ilişkinin veya bir planın şimdilik ertelendiğini ama tamamen unutulmadığını ifade ederiz.`
+  },
+  {
+    id: "lie-has-no-legs",
+    en: "A lie has no legs",
+    tr: "Yalancının mumu yatsıya kadar yanar",
+    tag: "Ortak Köken",
+    story: `Bu deyimin kökeni, Osmanlı ve İslam dünyasında günlük yaşamın vazgeçilmez bir parçası olan mum ve gece aydınlatmasına dayanır. Kaliteli mumlar gece boyunca yanabilirken, ucuz ve kalitesiz maddelerden yapılmış mumlar yatsı namazının vakti olan gece ortasına kadar ancak dayanabilirdi.
+
+    Halk bu gözlemden hareketle bir mecaz geliştirdi: Nasıl ki kalitesiz bir mum gece yarısına kadar bile tutunamıyorsa, yalanlar da uzun süre ayakta duramaz. Yalancının "mumu" —yani yalanı— gece yarısı söner. Toplumsal hafızada bu görüntü son derece güçlü bir yer edindi.
+
+    İngilizce versiyonu olan "A lie has no legs" ise aynı gerçeği farklı bir mecazla anlatır: Yalancının yalanı, bir canlı gibi ayakları olmayan bir varlıktır — durur, yıkılır. Her iki deyim de insanlığın ortak deneyimini yansıtır: Gerçek ne kadar ertelenirse ertelensin, yalan eninde sonunda kendini ele verir ve yıkılır. Doğruluk, uzun vadede her zaman yalanı geride bırakır.`
+  },
+  {
+    id: "many-a-little",
+    en: "Many a little makes a mickle",
+    tr: "Damlaya damlaya göl olur",
+    tag: "Ortak Köken",
+    story: `Türkçe deyimin kökeni, Anadolu'nun yarı kurak coğrafyasında, özellikle İç ve Güneydoğu Anadolu'nun su kıtlığıyla boğuşan köylerinde yatar. Bu bölgelerde yağmur suyu son derece değerliydi. Köylüler, taş ve topraktan inşa ettikleri sarnıçlara çatılardan, kayalıklardan ve zemin üzerinden gelen su damlalarını biriktirirlerdi.
+
+    Tek bir damlanın hiçbir anlamı yokmuş gibi görünürdü. Ama yeterince sabır gösterildiğinde, bu damlalar zamanla büyük miktarlarda suya dönüşürdü. Bir sarnıcı ya da gölü dolduran şey, hiçbir tek tek fark yaratmıyor gibi görünen binlerce, milyonlarca damlaydı. Bu gözlem Anadolu halkının bilgeliğine işledi ve "damlaya damlaya göl olur" deyimi doğdu.
+
+    İskoçça ve İngilizce'de yer alan "Many a mickle makes a muckle" ya da "Many a little makes a mickle" deyimi de aynı gerçeği dile getirir. İskoçça'da "mickle" küçük bir miktar, "muckle" ise büyük bir miktar anlamına gelir. Bu deyim, küçük birikim alışkanlığının erdemini anlatır. Her iki kültür de, küçücük ve anlamsız görünen katkıların zamanla dev bir bütün oluşturabileceğini kavramıştır.`
+  },
+  {
+    id: "trick-of-the-trade",
+    en: "The trick of the trade",
+    tr: "İşin püf noktası",
+    tag: "Ortak Köken",
+    story: `"Püf noktası" deyiminin kökeni, Türk el sanatları geleneğiyle, özellikle de çömlekçilik ve seramik işçiliğiyle iç içe geçmiştir. Usta-çırak ilişkisinin çok önem taşıdığı bu gelenekte, bilgi kuşaktan kuşağa aktarılırdı. Her ustanın, öğrencilerine kolayca açıklamadığı küçük sırları bulunurdu.
+
+    Hikayeye göre genç bir çömlek çırağı, ustasından defalarca kap yapmayı öğrenmesine rağmen, fırından çıkan kaplar hep çatlardı. Diğer çırakların kapları sağlam çıkıyordu ama bu genç bir türlü sırrı çözemiyordu. Sonunda dayanamayıp ustasına sordu. Usta güldü ve dedi ki: "Fırından yeni çıkmış kaba, tam orta noktasına 'püf' diye üfle. Eğer içinde küçük bir hava kabarcığı kalırsa, soğuma sırasında o kabarcık büyür ve kabı çatlatır. Ama nazikçe üflersen, o kabarcığı söndürürsün."
+
+    Bu küçük ama hayati sır, "işin püf noktası" deyimini doğurdu. İngilizce "trick of the trade" da aynı fikri taşır: her zanaatın, işin ya da mesleğin, dışarıdan görülmeyen ama içeridekiler için son derece değerli olan gizli bilgileri vardır. Bu bilgi, kitaplarda değil, ustadan çırağa aktarımda yaşar.`
+  },
+  {
+    id: "cross-the-line",
+    en: "Cross the line",
+    tr: "Çizmeyi aşmak",
+    tag: "Ortak Köken",
+    story: `Bu deyimin en bilinen ve keyifli köken hikayesi, ünlü Fransız ressam Jean-Léon Gérôme'a atfedilen bir anekdota dayanır. Gérôme, 19. yüzyılın en önemli Oryantalist ressamlarından biriydi ve tabloları büyük bir titizlikle çalışılmış ayrıntılarla doluydu.
+
+    Hikayeye göre, Gérôme bir gün tablosunu bir esnafa gösterirken, orada bulunan bir ayakkabıcı öne çıktı. Adam tablodaki bir figürün ayakkabısını inceledi ve "Efendim, o figürün ayakkabısının dikişleri böyle olmamalı, gerçek bir kundurada bu dikiş şöyle yapılır" dedi. Gérôme kibarca teşekkür etti ve bir sonraki tabloda o detayı düzeltti.
+
+    Ayakkabıcı cesaret aldı. Bir süre sonra aynı adam, tablodaki kumaş kıvrımlarını, renk seçimini ve arka planı da eleştirmeye başladı. Gérôme sabrını koruyarak onu dinledi ama bir noktada durdu ve nazikçe ama kesinlikle dedi: "Değerli dostum, ayakkabı konusundaki uyarın için sana minnetarım ve bunu düzelttim. Ancak sen bir ayakkabıcısın. Resmin diğer bölümleri senin uzmanlık alanının dışında. Lütfen çizmeyi aşma."
+
+    Bu söz o günlerde hızla yayıldı ve "çizmeyi aşmak" deyimi Türkçeye yerleşti. İngilizce "cross the line" da aynı uyarıyı taşır: Her insanın bir sınırı vardır; o sınırın ötesine geçmek, saygısızlık ve haddini bilmemezliktir.`
+  },
+  {
+    id: "student-becomes-master",
+    en: "The student has become the master",
+    tr: "Boynuz kulağı geçer",
+    tag: "Ortak Köken",
+    story: `Bu deyim, doğadan alınan son derece güçlü bir gözleme dayanır. Bir ineğin ya da koçun doğduğunda kulakları, küçük boynuz tomurcuklarının çok üzerinde ve önündedir. Kulaklar sabittir, büyümez; ama boynuzlar büyümeye devam eder. Zamanla boynuzlar uzar, şekillenir ve eninde sonunda kulakların önüne, hatta üzerine geçer.
+
+    Anadolu çobanları ve köylüleri bu fiziksel gerçekliği gözlemleyerek onu insani ilişkilere uyarladılar: Tıpkı boynuzun kulağı geçmesi gibi, yeni nesil ya da çırak da zamanla ustasını geride bırakabilir. Bir zamanlar öğreten olan, öğrencisi tarafından geçilebilir.
+
+    Bu deyim hem övgü hem de uyarı olarak kullanılır. Övgü olarak: "Şu öğrenci bak ne kadar ustalaştı, boynuz kulağı geçti." Uyarı olarak ise: "Dikkatli ol, yetiştirdiğin kişi seni geçip seni gölgede bırakabilir."
+
+    İngilizce'deki "The student has become the master" ifadesi ise popüler kültürde, özellikle Star Wars serisindeki usta-öğrenci ilişkisiyle yaygınlaştı. Her iki deyim de aynı derin gerçeği anlatır: Bilgi aktarımı, bir noktada öğrenenin öğreteni geçmesiyle sonuçlanabilir; bu hem doğal bir döngünün, hem de başarılı bir öğretimin göstergesidir.`
+  },
+  {
+    id: "smoke-fire",
+    en: "Where there's smoke, there's fire",
+    tr: "Ateş olmayan yerden duman çıkmaz",
+    tag: "Ortak Köken",
+    story: `Bu deyim, insanlığın en eski bilgelik parçalarından biridir ve neredeyse evrensel olarak farklı kültürlerde ortaya çıkmıştır. Kökeni, ateşin henüz kontrol altına alındığı ve hayatta kalmanın en önemli becerisi olduğu çağlara uzanır.
+
+    Avcı-toplayıcı topluluklar için uzaktaki bir duman sütunu son derece kritik bir işaretti. Duman, mutlaka bir ateş olduğuna işaret ederdi. Bu ateş, tehlikeli bir düşman kampı olabilirdi; ama aynı zamanda ısınacak, yemek pişirecek ve güvende olacak bir topluluk da anlamına gelebilirdi. Duman görmek, anlayışlı bir gözcü için "orada bir şeyler var" demekti.
+
+    Bu ilkel ve hayati gözlem zamanla soyut bir anlam kazandı: Bir söylenti, bir dedikodu, bir şüphe —bunlar "dumandır." Ve duman varsa, genellikle bir ateş —yani bir gerçek, bir neden, bir kaynak— mutlaka vardır. Duman tesadüfen çıkmaz.
+
+    Her iki dilde de bu deyim, özellikle skandal, şüphe ya da söylenti bağlamlarında kullanılır. Görünürde bir şeylerin ters gittiğine dair işaretler varsa, çoğunlukla gerçekten bir sorun mevcuttur.`
+  },
+  {
+    id: "crocodile-tears",
+    en: "Crocodile tears",
+    tr: "Timsah gözyaşları",
+    tag: "Ortak Köken",
+    story: `Bu deyim, antik çağlardan günümüze gelen ilginç bir inanışa dayanır. Ortaçağ Avrupası'nda çok okunan seyahat kitabı "The Travels of Sir John Mandeville" (1357) ve daha eski Yunan ve Roma kaynaklarında, timsahların avlarını yerken gerçek gözyaşı döktüklerine dair anlatılar yer alır. Yazarlar, timsahın önce kurbanını öldürdüğünü, sonra onu yerken sanki acıdan ya da pişmanlıktan ağlıyor gibi göründüğünü aktarırdı.
+
+    Elbette bu bir mit'tir. Timsahlar duygusal nedenlerle ağlamaz. Ancak timsahlar gerçekten gözlerinden sıvı salgılar —bu, sindirim sistemiyle bağlantılı, yemek yeme sırasında ortaya çıkan fizyolojik bir tepkidir. Antik gözlemciler bu sıvıyı yanlış yorumladı ve timsaha "sahte pişmanlık" atfetti.
+
+    Bu inanış o kadar güçlüydü ki, "timsah gözyaşları" hem Türkçe'de hem de İngilizce'de "crocodile tears" olarak tamamen aynı mecazı kullanarak, sahte yas, gerçek olmayan ağlama ve ikiyüzlü üzüntüyü anlatmak için kullanılan evrensel bir deyime dönüştü. İki kültürün aynı efsaneyi paylaşması, eski dünya ticaret yollarındaki kültürel etkileşimin bir göstergesidir.`
+  },
+  {
+    id: "blind-eye",
+    en: "Turn a blind eye",
+    tr: "Göz yummak",
+    tag: "Ortak Köken",
+    story: `İngilizce deyimin kökenine dair en iyi belgelenmiş hikaye, Amiral Horatio Nelson'a aittir. 2 Nisan 1801'de yaşanan Kopenhag Muharebesi'nde, Nelson'ın üstü Amiral Sir Hyde Parker bir noktada geri çekilme sinyali gönderdi. Savaş şiddetle devam ederken pek çok subay bu sinyali görüp Nelson'a bildirdi.
+
+    Nelson ise elindeki dürbünü kasten kör olan sağ gözüne koydu —Nelson, Calvi Kuşatması'nda bu gözünü yitirmişti. "Ben herhangi bir sinyal görmüyorum" dedi ve saldırıya devam etti. Sonuçta savaşı kazandı. Bu cesur ya da inatçı hareket İngiltere'de efsaneleşti ve "to turn a blind eye" —kör gözle bakmak, görmezden gelmek— deyimi İngilizceye yerleşti.
+
+    Türkçe'deki "göz yummak" ise farklı ama benzer bir mecazdan gelir: Gözleri yumduğunuzda görmezsiniz. Bilerek görmemek, kasıtlı olarak gözleri kapamak. Her iki deyim de aynı fikri —bilerek ve isteyerek bir şeyin üstünü örtmek, farkında olduğu hâlde görmezden gelmek— ifade eder. Bir kişi kurallara aykırı bir şeye "göz yumarsa", onu bildiği hâlde müdahale etmemeyi seçmiştir.`
+  },
+  {
+    id: "spill-the-beans",
+    en: "Spill the beans",
+    tr: "Baklayı ağzından çıkarmak",
+    tag: "Farklı Kökenler",
+    storyTR: `Türkçe deyimin kökeni, renkli ve halk mizahıyla yoğrulmuş bir hikayeye dayanır. Rivayete göre mahallede küfür etmesiyle tanınan bir adam, Ramazan ayında oruç tutmaya karar vermiştir. Oruç tutan biri küfür ederse orucunun bozulacağına inandığından, sinirlendiğinde ağzından yanlışlıkla küfür çıkmasın diye bir çare düşündü.
+
+    Çözümü ilginçti: Ağzına bir avuç bakla koydu. Bakla ağzını doldurduğu için ne kadar sinirlenirse sinirlensin düzgün kelime çıkaramayacaktı. Kışkırtılmaya başladı, öfkesi kabarıyordu, ama baklalar onu susturyordu. Arkadaşları onu kızdırmak için iyice üstüne gittiler.
+
+    Sonunda dayanamadı — tam patlamak üzereyken arkadaşlarından biri gülerek bağırdı: "Haydi çıkar şu baklayı ağzından da rahatla!" Adam baklayı tükürdü ve aklındaki her şeyi bir çırpıda söyledi. "Baklayı ağzından çıkarmak" deyimi, gizlenen bir sırrı ya da söylenemeyen bir gerçeği sonunda açıklamak anlamını bu renkli hikayeden aldı.`,
+    storyEN: `İngilizce "spill the beans" deyiminin kökeni ise Antik Yunan'a, özellikle de demokratik oy kullanma pratiklerine uzanır. Eski Yunan'da bazı gizli oylamalarda fasulyeler —ya da baklagiller— oy pusulası olarak kullanılırdı. Adaylar için renk kodlu fasulyeler dağıtılır ve seçmenler bunları içi görünmeyen kavanozlara ya da vazo benzeri kaplara bırakırlardı.
+
+    Oylama tamamlanmadan ya da sonuçlar açıklanmadan önce, eğer kap ya da kavanoz devrilir ve fasulyeler yere saçılırsa, sonuçlar istemeden açığa çıkmış olurdu. Bu, gizli olması gereken bir bilginin kontrolsüz biçimde ifşa edilmesiydi.
+
+    Bu somut görüntüden doğan "spill the beans" deyimi zamanla İngilizce'de, gizli bir bilgiyi —ister kasıtlı ister kazara— açığa çıkarmak anlamıyla kalıplaştı. Bugün "she spilled the beans" dediğimizde, o kişinin gizli tutulması gereken bir bilgiyi ortaya döktüğünü ifade ederiz.`
+  },
+  {
+    id: "cold-shoulder",
+    en: "Give the cold shoulder",
+    tr: "Soğuk davranmak",
+    tag: "Ortak Köken",
+    story: `Bu deyimin kökeni, Orta Çağ İngiltere'sinde misafirperverlik normlarına ve yemek kültürüne uzanır. O dönemde bir eve konuk geldiğinde, ev sahibinin tavrı sofrada açıkça belliydi. Değer verilen, sevilen bir misafir için taze pişirilmiş, sıcak yemekler hazırlanır; en iyi et parçaları, en lezzetli yiyecekler sunulurdu.
+
+    Oysa istenmeyen, hoş karşılanmayan ya da aşırı uzun süre kalan bir misafir için bambaşka bir muamele beklerdi. Ev sahibi özellikle yeni bir yemek pişirmez, bunun yerine önceki günden kalan soğuk koyun omzunu —"cold shoulder of mutton"— misafirin önüne koyardı. Bu bir jest değil, açık bir mesajdı: "Seni burada görmek istemiyorum, artık gitme vaktin geldi."
+
+    Misafir bu soğuk omzu gördüğünde, sözlü bir açıklamaya gerek kalmadan mesajı anlardı. Deyim, zamanla fiziksel yemeğin ötesinde bir anlam kazandı ve herhangi bir bağlamda birini kasıtlı olarak görmezden gelmek, soğuk ve mesafeli davranmak, ilgisizlikle reddetmek anlamına geldi. Türkçe "soğuk davranmak" da sıcaklığın eksikliğini —mecazi olarak— ifade eder ve aynı duyguyu aktarır.`
+  },
+  {
+    id: "bite-the-bullet",
+    en: "Bite the bullet",
+    tr: "Dişini sıkmak",
+    tag: "Farklı Kökenler",
+    storyTR: `Türkçe'deki "dişini sıkmak" deyimi, fiziksel bir tepkiden doğan çok doğal bir mecaza sahiptir. İnsanlar tarihin her döneminde şiddetli acıyla ya da büyük bir zorlukla karşılaştıklarında, dişlerini sıkarak dayanmaya çalışmışlardır. Bu, hem bilinçli hem de içgüdüsel bir tepkidir.
+
+    Dişleri sıkmak, kasların gerilmesini, zihnin odaklanmasını ve bedenin acıya karşı direnç sergilemesini simgeler. Anadolu kültüründe sabır ve dayanıklılık son derece yüksek değer taşıyan erdemler arasındaydı. Zorluklara "dişini sıkarak" katlanmak, cesaret ve kararlılığın somut bir ifadesiydi. Deyim bu kültürel değerden beslenmiştir: Zor olan ne olursa olsun, pes etme, dayan, dişini sık ve devam et.`,
+    storyEN: `İngilizce "bite the bullet" deyiminin kökeni ise son derece çarpıcı bir savaş alanı gerçeğine dayanır. 18. ve 19. yüzyıllarda, modern anestezinin henüz mevcut olmadığı dönemlerde, yaralı askerlerin savaş alanında ya da çadır hastanelerde geçirilmesi gereken acil ameliyatlar —kurşun çıkarmak, gangren olan uzvu kesmek gibi— büyük acı içinde gerçekleştirilmek zorundaydı.
+
+    Cerrahlar, askerlerin ameliyat sırasında çığlık atmalarını, kasılmalarını ve dillerini ısırmalarını önlemek için onların ağzına bir kurşun verirlerdi. Asker bu kurşunu ısırarak hem acısını bastırmaya çalışır hem de dilini korurdu.
+
+    Kurşunun metali, ısırıldığında biraz yumuşak bir direnç sağladığından, çenelerin kasılması için fiziksel bir hedef oluşturuyordu. Bu son derece acı verici ama zorunlu deneyim, "bite the bullet" —kurşunu ısır— deyimini doğurdu. Bugün bu deyim, kaçınılmaz ama zor ve sancılı bir şeyle yüzleşmeyi, gözünü kırpmadan yapmak zorunda olduğun şeyi yapmayı ifade eder.`
+  },
+  {
+    id: "ends-meet",
+    en: "Can't make ends meet",
+    tr: "İki yakası bir araya gelmemek",
+    tag: "Farklı Kökenler",
+    storyTR: `Türkçe deyimin kökeni, ekonomik sıkıntının giysi aracılığıyla dışarıdan okunabildiği bir dönemin gerçekliğine dayanır. Anadolu'da yoksul ailelerin çocukları ya da maddi durumu bozulan kişiler, eskiyen ya da çürüyen giysilerini yamalatarak ya da değiştirerek giyerlerdi.
+
+    Yoksulluğun en belirgin işaretlerinden biri, kıyafetin ön kısmındaki iki yakanın —ya da iki düğme sırasının— birbirinden uzak olmasıydı. Kumaş zamanla çekmiş ya da kişi kilo almış olabilirdi; ama asıl neden çoğunlukla ekonomikti: kumaş yetmiyordu, elbise yenilenemiyordu. "İki yakası bir araya gelmemek" böylece hem fiziksel —iki uç birleşemiyor— hem de mali anlam taşıyan güçlü bir mecaza dönüştü.
+
+    Bugün bu deyim, gelirin giderleri karşılayamamasını, ay sonuna ulaşılamamasını anlatır. Para kazanılır kazanılmaz bitmektedir; iki yakayı bir araya getirmenin imkânı yoktur.`,
+    storyEN: `İngilizce versiyonun kökenine ilişkin en yaygın açıklama, muhasebe ve ticaret dünyasından gelir. "Ends" —uçlar— kelimesi, bir hesap döneminin başını ve sonunu, yani "year's end" ile "year's beginning" ifadelerini temsil eder.
+
+    Tüccarlar ve esnaf, yılın başındaki gelir tahminini ve yılın sonundaki fiili giderlerini birbirine denk getirmek, yani "make ends meet" etmek zorundaydı. Eğer gelirler giderleri karşılamıyorsa, bütçenin iki ucu bir araya gelemiyordu: hesap kapanmıyor, borç kalıyordu.
+
+    Bu muhasebe metaforu zamanla günlük dile geçti ve maddi durumu yetersiz olan herkesin kullandığı evrensel bir ifadeye dönüştü. "We can't make ends meet" —uçları bir araya getiremiyoruz— demek, yeterli gelir olmaksızın giderlerin karşılanamadığını, ekonomik dengenin bir türlü kurulamamasını anlatır.`
+  },
+  {
+    id: "lick-paws",
+    en: "To lick one's paws",
+    tr: "Avucunu yalamak",
+    tag: "Ortak Köken",
+    story: `Bu deyimin kökeni, doğa gözleminden beslenen ve hem Türk hem de Avrupa halk geleneğinde yer alan bir inanışa dayanır. Kış uykusuna yatan ayıların —özellikle pençelerini yaladıkları— gözlemlenmesi, halk tarafından farklı biçimlerde yorumlandı.
+
+    Söylenceye göre ayılar uzun kış uykusu boyunca hiçbir şey yemeden pençelerinin altındaki yağlı bölgeleri yalayarak beslenir ve kendilerini avutmaya çalışırlardı. Bu görüntü, gerçek bir ödül ya da kazanç yokken sanki bir şeyler elde ediyormuş gibi davranmayı, boş umutla oyalanmayı sembolize etti.
+
+    "Avucunu yalamak" deyimi böylece iki anlam kazandı. Birincisi: Emek verip bir şey karşılığında hiçbir şey alamamak, eline geçen olmak —sadece avucunu yalamak kaldı. İkincisi: Boş hayaller kurmak, gerçek olmayan bir ödülün beklentisiyle kendinizi oyalamak.
+
+    İngilizce'deki "lick one's wounds" (yaralarını yalamak) da benzer bir hayvani içgüdüden beslenir: Yaralı bir hayvan sessizce çekilir ve yaralarını yalar. İki mecaz da insanın içe çekilme, hayal kırıklığıyla başa çıkma ve zararı kabul etme deneyimini anlatır.`
+  },
+  {
+    id: "dressed-nines",
+    en: "Dressed to the nines",
+    tr: "İki dirhem bir çekirdek",
+    tag: "Farklı Kökenler",
+    storyTR: `Türkçe deyimin kökeni Osmanlı ölçü sistemine ve kuyumculuk geleneğine dayanır. Osmanlı'da ağırlık birimi olarak dirhem kullanılırdı; bir dirhem yaklaşık 3,2 gram geliyordu. Altın ve gümüş takılar, kumaşlar ve değerli eşyalar bu birimle tartılıp satılırdı.
+
+    Halk arasında yaygınlaşan bir inanışa göre, en kaliteli ve şık bir kıyafetin ya da takı setinin ağırlığı "iki dirhem bir çekirdek" gelirdi — yani son derece hafif, ince işçilikle yapılmış, gösterişli ama zarif. Bu ifade, zamanla gereğinden süslü, özenle giyinmiş, üzerindeki kıyafet ve aksesuarlar kusursuz seçilmiş kişileri nitelendirmek için kullanılmaya başlandı.
+
+    Bugün "iki dirhem bir çekirdek giyinmek" dediğimizde, kişinin son derece özenle, belki de biraz aşırıya kaçarak, her detayına dikkat ederek giyindiğini kastederiz.`,
+    storyEN: `İngilizce "dressed to the nines" ifadesinin kökeni konusunda çeşitli teoriler mevcuttur. En yaygın kabul gören açıklama, terzilik ve dikiş sanatına dayanır. 18. ve 19. yüzyıllarda, bir beyefendinin kusursuz ve gösterişli bir takım elbisesi diktirmek için terziye tam dokuz yarda (yaklaşık 8,2 metre) kumaş vermesi gerektiği söylenirdi. Dokuz yarda kumaş, mükemmel bir kesim, bol etekler ve tam oturan bir ceket için gerekli olan miktardı.
+
+    Dolayısıyla "dressed to the nines" —tam dokuza kadar giyinmiş— demek, en kaliteli ve en bol kumaşla, en özenli işçilikle hazırlanmış bir kıyafetle süslenmiş olmak demekti. Bu ifade 18. yüzyılın sonlarında İskoçya'da belgelenmiş olmakla birlikte, tam kökeni hâlâ tartışma konusudur. Diğer bir teori ise dokuzun İngilizce'de mükemmele yakın en yüksek tek basamaklı sayı olmasına, dolayısıyla "en üst düzey" anlamı taşımasına dayandırılır.`
+  },
+  {
+    id: "bite-the-dust",
+    en: "Bite the dust",
+    tr: "Hapı yutmak",
+    tag: "Farklı Kökenler",
+    storyTR: `Türkçe "hapı yutmak" deyiminin kökeni, Osmanlı döneminin yasak ve tehlikeli bir gerçekliğine uzanır. IV. Murad döneminde (1623–1640) kahve ve tütün yasaklarıyla birlikte afyon da ciddi kısıtlamalarla karşılaştı. Afyon başta Mısır ve İran olmak üzere geniş coğrafyalarda kullanılan bir uyuşturucuydu ve Osmanlı'da bazı dönemlerde hem üretimi hem de tüketimi yasaklandı.
+
+    Bu dönemde afyon, küçük toplar ya da haplar hâlinde taşınırdı. Zabıta ya da yeniçeriler baskın yaptığında, afyon taşıyan kişiler cezadan kurtulmak için ellerindeki hapları hızla yutarlardı. Hem suç delilini yok etmeye hem de cezadan kaçmaya çalışırlardı. Ancak bu çoğu zaman işe yaramazdı; baskın yapanlar bu hileli hareketi bildiğinden şüpheliyi gözaltına alırlardı. Dahası, yuttuğu maddenin toksik etkisi kişiyi hasta edebilir, hatta bazen öldürebilirdi.
+
+    "Hapı yutmak" deyimi böylece "çok kötü bir duruma düşmek, mahvolmak, büyük bir belaya girmek" anlamını kazandı. Bugün de aynı anlamda kullanılır: "Hapı yuttuk" — işimiz bitti, büyük bir belaya düştük.`,
+    storyEN: `İngilizce "bite the dust" deyiminin kökeni, savaş alanı sahnelerine dayanır. Vurularak ya da yaralanarak düşen bir savaşçının, yüzüstü yere kapandığında yüzünün toprağa değmesi ve ağzının tozu ısırması son derece canlı bir görsel imgedir. Bu sahne, hem antik Yunan ve Roma edebiyatında hem de İncil'de benzer ifadelerle yer alır.
+
+    Homeros'un İlyada'sında düşen savaşçıları anlatan bölümlerde bu imgeye yakın ifadeler kullanılır. İngilizce'de ise deyim, 18. yüzyılda Tobias Smollett'in Don Kişot çevirisinde açıkça kullanıldı. "Bite the dust" zamanla hem fiziksel —savaşta ölmek, yenilmek— hem de mecazi —başarısız olmak, hayatta bir mücadeleyi kaybetmek— anlam taşımaya başladı.
+
+    Deyim popüler kültürde Queen'in 1980 tarihli "Another One Bites the Dust" şarkısıyla yeni bir kitleye ulaştı. Bugün biri "bite the dust" dediğinde, bir girişimin, bir ilişkinin ya da bir planın son bulduğunu, başarısız olduğunu ya da mahvolduğunu kastediyoruz.`
+  },
+  {
+    id: "piper-tune",
+    en: "He who pays the piper calls the tune",
+    tr: "Parayı Veren Düdüğü Çalar",
+    tag: "Ortak Köken",
+    story: `Bu deyimin en renkli Türkçe köken hikayesi, Nasrettin Hoca fıkralarından birine dayandırılır. Hoca pazara gittiğinde bir grup çocuk etrafını sararak "Hoca efendi, bize düdük getir!" diye yalvardı. Hoca güldü ve "Peki, getiririm" dedi. Pazardan dönerken düdükçü tezgâhında durdu. Elinde sadece birkaç çocuğa yetecek kadar para vardı.
+
+    Parasını vererek düdük satın aldı. Eve döndüğünde çocuklar koştu. Hoca yalnızca para verenlere düdük uzattı. Parası olmayanlar şikâyet ettiğinde Hoca dedi ki: "Kardeşim, parayı ben verdim, düdüğü ben çalacağım. Parayı kim verirse, düdüğü o çalar."
+
+    Bu fikir aslında çok daha eski ve evrensel bir gerçeği yansıtır: Maddi gücü elinde tutan, kararları da o alır. İngilizce deyim de aynı ilkeyi anlatır. "The piper" —düdükçü ya da borucular— kimin parasıyla çalıyorsa, o kişinin istediği melodiyi çalmak zorundadır. Para, otoriteyi ve kontrolü belirler. Bugün bu deyim iş dünyasında, siyasette ve kişisel ilişkilerde gücün para aracılığıyla nasıl işlediğini anlatmak için sıkça kullanılır.`
+  },
+  {
+    id: "rose-thorn",
+    en: "No rose without a thorn",
+    tr: "Gülü seven dikenine katlanır",
+    tag: "Ortak Köken",
+    story: `Gül, Türk ve İslam kültüründe son derece derin bir anlam taşır. Osmanlı şiirinde, tasavvufta ve halk kültüründe gül hem güzelliğin hem de aşkın sembolüdür. Hz. Muhammed'in gülle özdeşleştirilmesi, güle kutsallık kazandırmıştır. Ancak bu güzellikteki gerçeklik, gülün dikenleri olmadan gelmediğidir.
+
+    Anadolu bahçıvanları ve gül yetiştiricileri bu gerçeği çok iyi biliyordu. Gül budamak, gülleri toplamak ve onlarla çalışmak, ellerin sürekli dikenlerle delinmesi anlamına geliyordu. Güzel olanın bedelini ödemek gerekiyordu. Bu bilgelik kısa ve güçlü bir atasözüne dönüştü: "Gülü seven dikenine katlanır."
+
+    İngilizce "No rose without a thorn" da aynı anlayışı paylaşır ve bu deyim Chaucer ve Shakespeare dönemlerine kadar geri gider. Her iki kültürde de mesaj aynıdır: Değerli olan her şeyin bir bedeli vardır. Gerçek güzellik, gerçek aşk, gerçek başarı —hepsi zorlukla, sabırla ve bazen acıyla birlikte gelir. Güzeli elde etmek isteyenler, onun zorluklarına da göğüs gермек zorundadır.`
+  },
+  {
+    id: "early-bird",
+    en: "The early bird catches the worm",
+    tr: "Erken kalkan yol alır",
+    tag: "Ortak Köken",
+    story: `Bu deyim, hem tarım hem de göçebe kültürlerinde sabahın erken saatlerinin ne kadar kritik olduğuna dair ortak bir deneyimden doğmuştur. Türkçe versiyonun arka planında, Anadolu'nun uzak ve çoğu zaman tehlikeli yollarında seyahat eden kervanlar ve yolcular yer alır. Güneş doğmadan yola çıkan bir yolcu, hem serinlikten yararlanır hem de daha güvenli bir parkur izleyebilirdi. Üstelik kervansaraylarda yer kalmadan önce konaklama bulabilirdi.
+
+    Erken kalkmak, yorgunluğa rağmen disiplinli bir azmin göstergesiydi. "Erken kalkan yol alır" deyimi, sadece fiziksel seyahati değil; hayatta, işte ve öğrenmede erken harekete geçmenin avantajını da anlatmaktadır.
+
+    İngilizce "the early bird catches the worm" ise William Camden'in 1605 tarihli "Remaines of a Greater Worke Concerning Britaine" adlı eserinde ilk kez yazılı olarak kayıt altına alınmıştır. Doğadan alınan bu mecazda, şafakla birlikte uçan kuş yeterli solucan bulur; geç kalanlar geride kalır. Her iki deyim de erkenliğin fırsat yarattığı, tembelliğin ise fırsatı kaçırdığı ortak gerçeğini anlatır.`
+  },
+  {
+    id: "actions-words",
+    en: "Actions speak louder than words",
+    tr: "Lafla peynir gemisi yürümez",
+    tag: "Ortak Köken",
+    story: `Türkçe deyimin kökeni, son derece somut ve görsel bir ticarî gerçekliğe dayanır. Rivayete göre, eski bir liman şehrinde bir peynir tüccarı vardı. Adam, her gün limana inip denizde yüzen bir kayığa bakarak hayaller kurardı. Arkadaşlarına ve müşterilerine sürekli şunu söylerdi: "Bu sene büyük bir gemi satın alacağım. Peynirimi o gemiyle İstanbul'a, Kahire'ye, belki Venedik'e göndereceğim. Para kazanacağım, işimi büyüteceğim."
+
+    Herkes bu hayalleri defalarca dinledi. Ama tüccar hiçbir zaman gerçek bir adım atmadı. Gemi almak için para biriktirmedi, ortak aramadı, rota çalışmadı. Sadece konuştu. Bir gün biri sabırsızlanarak sordu: "Peki bu gemi ne zaman gelecek?" Tüccar cevap vermek yerine suskunlaştı. Orada bulunanlardan biri güldü ve dedi: "Kardeşim, lafla peynir gemisi yürümez."
+
+    Bu söz halk arasında yayıldı ve söz-eylem çelişkisini anlatan güçlü bir atasözüne dönüştü.
+
+    İngilizce "actions speak louder than words" ifadesi ise 17. yüzyıl İngiliz siyasi yazınında görünür olmaya başladı. 1736'da John Pym'e atfedilen Parlamento konuşmalarında buna yakın bir ifade kullanılmıştır. Her iki deyim de aynı gerçeği vurgular: Ne söylediğin değil, ne yaptığın önemlidir. Güvenilirlik kelimelerle değil, eylemlerle kazanılır.`
+  }
+];
+
+// ─────────────────────────────────────────────────────────────
+// DURUM: Şu an hangi deyim açık? (null = liste görünümü)
+// ─────────────────────────────────────────────────────────────
+let currentId = null;
+
+// ─────────────────────────────────────────────────────────────
+// YARDIMCI: Listeyi göster
+// ─────────────────────────────────────────────────────────────
+function showList(filter) {
+  filter = filter || '';
+  currentId = null;
+
+  document.getElementById('listPage').style.display = 'block';
+  document.getElementById('detail').style.display = 'none';
+  document.getElementById('searchWrap').style.display = '';
+
+  const q = filter.toLowerCase().trim();
+  const filtered = q
+    ? IDIOMS.filter(d =>
+        d.en.toLowerCase().includes(q) ||
+        d.tr.toLowerCase().includes(q) ||
+        (d.story  || '').toLowerCase().includes(q) ||
+        (d.storyTR || '').toLowerCase().includes(q) ||
+        (d.storyEN || '').toLowerCase().includes(q)
+      )
+    : IDIOMS;
+
+  document.getElementById('countBadge').textContent = filtered.length + ' deyim';
+  document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = filtered.map(function(d, i) {
+    const idx = (IDIOMS.indexOf(d) + 1).toString().padStart(2, '0');
+    const preview = (d.story || d.storyTR || '').substring(0, 160) + '…';
+    return '<div class="card" style="animation-delay:' + (i * 0.04) + 's" onclick="openDetail(\'' + d.id + '\')">' +
+      '<div class="card-top">' +
+        '<div class="card-num">Deyim ' + idx + '</div>' +
+        '<div class="card-en">' + d.en + '</div>' +
+        '<div class="card-tr">' + d.tr + '</div>' +
+        '<div class="card-preview">' + preview + '</div>' +
+      '</div>' +
+      '<div class="card-footer">' +
+        '<span class="tag">' + d.tag + '</span>' +
+        '<button class="btn-incele" onclick="event.stopPropagation();openDetail(\'' + d.id + '\')">İncele →</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+// YARDIMCI: Detay sayfasını göster
+// ─────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const item = IDIOMS.find(function(d) { return d.id === id; });
+  if (!item) { showList(); return; }
+
+  currentId = id;
+
+  // Sayfaları değiştir
+  document.getElementById('listPage').style.display = 'none';
+  document.getElementById('detail').style.display = 'block';
+  document.getElementById('searchWrap').style.display = 'none';
+
+  // Numara hesapla
+  const num = (IDIOMS.indexOf(item) + 1).toString().padStart(2, '0');
+
+  // Hikaye HTML'i oluştur
+  var storyHTML = '';
+  if (item.story) {
+    // Paragrafları <p> etiketlerine çevir
+    var paragraphs = item.story.split(/\n\s*\n/).map(function(p) {
+      return '<p class="story-text">' + p.trim().replace(/\n/g, ' ') + '</p>';
+    }).join('<br>');
+    storyHTML =
+      '<div class="story-section">' +
+        '<div class="story-label">Hikayenin Kökeni</div>' +
+        paragraphs +
+      '</div>';
+  } else {
+    var paragraphsTR = item.storyTR.split(/\n\s*\n/).map(function(p) {
+      return '<p class="story-text">' + p.trim().replace(/\n/g, ' ') + '</p>';
+    }).join('<br>');
+    var paragraphsEN = item.storyEN.split(/\n\s*\n/).map(function(p) {
+      return '<p class="story-text accent-border">' + p.trim().replace(/\n/g, ' ') + '</p>';
+    }).join('<br>');
+    storyHTML =
+      '<div class="story-section">' +
+        '<div class="story-label"><span class="story-flag">🇹🇷</span> Türkçe Köken</div>' +
+        paragraphsTR +
+      '</div>' +
+      '<hr class="divider"/>' +
+      '<div class="story-section">' +
+        '<div class="story-label"><span class="story-flag">🇬🇧</span> İngilizce Köken</div>' +
+        paragraphsEN +
+      '</div>';
+  }
+
+  // innerHTML ile detay içeriğini bas
+  document.getElementById('detail-content').innerHTML =
+    '<div class="detail-header">' +
+      '<div class="detail-num">Deyim ' + num + ' &nbsp;·&nbsp; ' + item.tag + '</div>' +
+      '<div class="detail-en">' + item.en + '</div>' +
+      '<div class="detail-tr">' + item.tr + '</div>' +
+    '</div>' +
+    '<div class="detail-body">' + storyHTML + '</div>';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────────────────────
+// Ana listeye dön
+// ─────────────────────────────────────────────────────────────
+function goHome() {
+  document.getElementById('searchInput').value = '';
+  showList('');
+}
+
+// ─────────────────────────────────────────────────────────────
+// OLAY DİNLEYİCİLER
+// ─────────────────────────────────────────────────────────────
+document.getElementById('backBtn').addEventListener('click', function() {
+  document.getElementById('searchInput').value = '';
+  showList('');
+});
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  if (!currentId) {
+    showList(this.value);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────
+// İLK YÜKLEME VE YÖNLENDİRME (KAREKOD İÇİN)
+// ─────────────────────────────────────────────────────────────
+// Sitenin adresinde bir "id" parametresi var mı diye kontrol et
+const urlParametreleri = new URLSearchParams(window.location.search);
+const gelenId = urlParametreleri.get('id');
+
+// Eğer linkte id varsa (örneğin ?id=haste-makes-waste), o deyimi aç
+if (gelenId) {
+  openDetail(gelenId);
+} else {
+  // Eğer id yoksa normal ana sayfayı (listeyi) göster
+  showList('');
+}
+</script>
+</body>
+</html>
